@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVP Prediction Model Performance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F0F8FF;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 640px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .stat-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="text-[#004080]">
+
+    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight"> स्वशासन-Prediction Layer Performance</h1>
+            <p class="mt-4 text-lg md:text-xl text-[#005A9C]">A comprehensive performance review demonstrating superior prediction and processing capabilities.</p>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <div class="stat-card lg:col-span-1 md:col-span-1">
+                <h2 class="text-xl font-bold mb-2">Intention Prediction</h2>
+                <p class="text-sm text-gray-600 mb-4">The model correctly predicts agent intentions, such as turns and lane changes, with remarkable accuracy.</p>
+                <div class="chart-container h-64 sm:h-72">
+                    <canvas id="intentionAccuracyChart"></canvas>
+                </div>
+                <p class="text-center mt-4 font-semibold">87% Accuracy Achieved (Target: ≥75%)</p>
+            </div>
+
+            <div class="stat-card lg:col-span-1 md:col-span-1">
+                <h2 class="text-xl font-bold mb-2">System Latency</h2>
+                <p class="text-sm text-gray-600 mb-4">Processing latency is significantly lower than the maximum allowable threshold, ensuring real-time performance.</p>
+                 <div class="chart-container h-64 sm:h-72">
+                    <canvas id="latencyChart"></canvas>
+                </div>
+                 <p class="text-center mt-4 font-semibold">62% Faster Than Target</p>
+            </div>
+
+            <div class="stat-card lg:col-span-1 md:col-span-2 lg:col-span-1">
+                <h2 class="text-xl font-bold mb-2">Prediction Miss Rate</h2>
+                <p class="text-sm text-gray-600 mb-4">The model demonstrates high reliability with a miss rate well below the 10% tolerance level.</p>
+                <div class="chart-container h-64 sm:h-72">
+                    <canvas id="missRateChart"></canvas>
+                </div>
+                <p class="text-center mt-4 font-semibold">Only 4% Miss Rate (Target: ≤10%)</p>
+            </div>
+
+            <div class="stat-card lg:col-span-3">
+                <h2 class="text-2xl font-bold mb-2 text-center">Trajectory Prediction Accuracy</h2>
+                <p class="text-md text-gray-600 mb-6 text-center">The model consistently outperforms displacement error targets over a 5-second horizon, showcasing precise path forecasting. Lower values indicate higher accuracy.</p>
+                <div class="chart-container h-[40vh] max-h-[450px] max-w-4xl">
+                    <canvas id="trajectoryErrorChart"></canvas>
+                </div>
+            </div>
+
+            <div class="stat-card lg:col-span-3">
+                 <h2 class="text-2xl font-bold mb-2 text-center">Core Performance Metrics</h2>
+                 <p class="text-md text-gray-600 mb-6 text-center">The model's core processing speeds for inference and data updates surpass the minimum requirements for the campus MVP.</p>
+                 <div class="chart-container h-[40vh] max-h-[450px] max-w-4xl">
+                    <canvas id="coreMetricsChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="stat-card lg:col-span-3 text-center">
+                <h2 class="text-2xl font-bold mb-2">Environmental Robustness</h2>
+              <!--  <p class="text-5xl font-bold text-[#17A2B8] my-4">☀️</p>   -->
+                <p class="text-lg text-gray-700">The model has been fully validated for robust performance under all anticipated daylight conditions, meeting the project's operational requirements.</p>
+               <!--   <div class="mt-4 bg-blue-100 border-l-4 border-[#007BFF] text-blue-800 p-4 rounded-r-lg" role="alert">
+                  <p class="font-bold">Status: Requirement Met</p>  -->
+                </div>
+            </div>
+
+        </main>
+
+       <!--
+       
+        <footer class="text-center mt-12 pt-8 border-t border-gray-300">
+            <p class="text-sm text-gray-500">&copy; 2025 Campus MVP Project. All data presented is based on the latest model observations.</p>
+        </footer> 
+    </div>
+
+         -->
+
+    <script>
+        const wrapLabel = (str, maxLen) => {
+            if (str.length <= maxLen) {
+                return str;
+            }
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + word).length > maxLen && currentLine.length > 0) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            }
+            lines.push(currentLine.trim());
+            return lines;
+        };
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+        
+        const commonTooltipOptions = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    }
+                }
+            }
+        };
+
+        const intentionAccuracyCtx = document.getElementById('intentionAccuracyChart').getContext('2d');
+        new Chart(intentionAccuracyCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Accuracy', 'Shortfall to 100%'],
+                datasets: [{
+                    data: [87, 13],
+                    backgroundColor: ['#007BFF', '#D3E9FF'],
+                    borderColor: ['#FFFFFF'],
+                    borderWidth: 4,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: (tooltipItems) => tooltipItems[0].label,
+                            label: (context) => `${context.raw}%`
+                        }
+                    }
+                }
+            }
+        });
+
+        const latencyCtx = document.getElementById('latencyChart').getContext('2d');
+        new Chart(latencyCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Latency (ms)'],
+                datasets: [
+                    {
+                        label: 'Model Observation',
+                        data: [38],
+                        backgroundColor: '#007BFF',
+                        borderColor: '#0056b3',
+                        borderWidth: 1,
+                        barPercentage: 0.5
+                    },
+                    {
+                        label: 'Target',
+                        data: [100],
+                        backgroundColor: '#C0C0C0',
+                        borderColor: '#A9A9A9',
+                        borderWidth: 1,
+                        barPercentage: 0.5
+                    }
+                ]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 110,
+                        title: { display: true, text: 'Milliseconds (ms)' }
+                    },
+                    y: {
+                         grid: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        callbacks: {
+                             title: (tooltipItems) => ''
+                        }
+                    }
+                }
+            }
+        });
+
+        const missRateCtx = document.getElementById('missRateChart').getContext('2d');
+        new Chart(missRateCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Success Rate', 'Miss Rate'],
+                datasets: [{
+                    data: [96, 4],
+                    backgroundColor: ['#17A2B8', '#FF6384'],
+                    borderColor: ['#FFFFFF'],
+                    borderWidth: 4,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    tooltip: {
+                        callbacks: {
+                             title: (tooltipItems) => tooltipItems[0].label,
+                             label: (context) => `${context.raw}%`
+                        }
+                    }
+                }
+            }
+        });
+
+        const trajectoryErrorCtx = document.getElementById('trajectoryErrorChart').getContext('2d');
+        const trajectoryLabels = [
+            'Average Displacement Error (ADE) over 5s',
+            'Final Displacement Error (FDE) over 5s',
+            'minADE (k=5 modes) over 5s horizon',
+            'minFDE (k=5 modes) over 5s horizon'
+        ].map(label => wrapLabel(label, 20));
+
+        new Chart(trajectoryErrorCtx, {
+            type: 'bar',
+            data: {
+                labels: trajectoryLabels,
+                datasets: [
+                    {
+                        label: 'Model Observation (m)',
+                        data: [0.24, 0.51, 0.20, 0.48],
+                        backgroundColor: '#007BFF',
+                        borderColor: '#0056b3',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Target (m)',
+                        data: [1.5, 3.0, 1.0, 2.0],
+                        backgroundColor: '#C0C0C0',
+                        borderColor: '#A9A9A9',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Error in Meters (Lower is Better)' }
+                    }
+                },
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: commonTooltipOptions.plugins.tooltip
+                }
+            }
+        });
+        
+        const coreMetricsCtx = document.getElementById('coreMetricsChart').getContext('2d');
+        new Chart(coreMetricsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Inference Speed (FPS)', 'Update Rate (Hz)'],
+                datasets: [
+                    {
+                        label: 'Model Observation',
+                        data: [12, 12],
+                        backgroundColor: '#17A2B8',
+                        borderColor: '#117A8B',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Target',
+                        data: [10, 10],
+                        backgroundColor: '#C0C0C0',
+                        borderColor: '#A9A9A9',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Frames Per Second / Hertz (Higher is Better)' }
+                    }
+                },
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: commonTooltipOptions.plugins.tooltip
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
