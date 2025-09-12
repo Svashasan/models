@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Global EV Market Landscape: A 2025 Snapshot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F0F4F8; 
+            color: #102A43;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 500px;
+            }
+        }
+        .stat-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1;
+            color: #3366CC;
+        }
+        .stat-label {
+            font-size: 1.125rem;
+            color: #4A5568;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 tracking-tight">The Global EV Market Landscape</h1>
+            <p class="mt-4 text-xl text-gray-600">A Data-Driven Snapshot for Fiscal Year 2025</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="highlights" class="mb-12">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-2">2025 Market Highlights</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">The electric vehicle revolution is accelerating globally, led by pioneers in market penetration and giants in market volume. These key figures set the stage for a diverse and rapidly evolving industry.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="stat-card">
+                    <div class="stat-number">$164B</div>
+                    <div class="stat-label">China's commanding market valuation, showcasing its dominance in sheer economic scale.</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">93.7%</div>
+                    <div class="stat-label">Norway's unparalleled EV market share, representing near-total adoption and a model for the future.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="market-share" class="bg-white rounded-lg shadow-md p-6 mb-12">
+            <div class="text-left mb-6">
+                <h2 class="text-3xl font-bold mb-2">Leaders of the Pack: EV Market Share Dominance</h2>
+                <p class="text-lg text-gray-600">Market share reveals the pioneers of EV adoption. The following countries lead the world in the transition to electric mobility, with EVs representing a significant portion of their total vehicle sales. Norway stands in a class of its own, demonstrating what is possible with strong policy and consumer demand.</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="marketShareChart"></canvas>
+            </div>
+        </section>
+        
+        <section id="market-giants" class="mb-12">
+            <div class="text-center mb-8">
+                 <h2 class="text-3xl font-bold mb-2">Giants of Scale: Valuation & Units Sold</h2>
+                 <p class="text-lg text-gray-600 max-w-3xl mx-auto">While market share shows adoption rates, absolute numbers in valuation and units sold reveal the economic powerhouses of the EV industry. China's market is colossal in both respects, followed by other major global economies that are investing heavily and seeing massive sales volumes.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Top 10 by Market Valuation (USD)</h3>
+                    <div class="chart-container h-96 md:h-[500px]">
+                        <canvas id="marketValuationChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6">
+                     <h3 class="text-2xl font-bold mb-4 text-center">Top 10 by Units Sold</h3>
+                    <div class="chart-container h-96 md:h-[500px]">
+                        <canvas id="unitsSoldChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="relationship" class="bg-white rounded-lg shadow-md p-6 mb-12">
+            <div class="text-left mb-6">
+                <h2 class="text-3xl font-bold mb-2">Share vs. Scale: A Complex Relationship</h2>
+                <p class="text-lg text-gray-600">Does high market penetration translate to the largest market value? This bubble chart explores the relationship between market share (horizontal axis), market valuation (vertical axis), and units sold (bubble size). We can clearly see two types of leaders: high-penetration countries like Norway with smaller total valuations, and high-volume countries like China, which combines significant share with immense scale.</p>
+            </div>
+            <div class="chart-container h-[500px] md:h-[600px] max-h-[70vh]">
+                <canvas id="bubbleChart"></canvas>
+            </div>
+        </section>
+        
+    </main>
+    
+    <footer class="bg-gray-800 text-white mt-12 py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Global EV Market Analysis. Data synthesized for FY2025.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const evData = [
+                { country: 'Switzerland', share: 20.5, valuation: 3.4, units: 113900 },
+                { country: 'Denmark', share: 63.8, valuation: 4.5, units: 57171 },
+                { country: 'Sweden', share: 35.2, valuation: 6.2, units: 49667 },
+                { country: 'Norway', share: 93.7, valuation: 5.4, units: 70748 },
+                { country: 'Finland', share: 34.2, valuation: 1.7, units: 12726 },
+                { country: 'Netherlands', share: 35.0, valuation: 4.1, units: 63940 },
+                { country: 'Austria', share: 22.0, valuation: 1.1, units: 31534 },
+                { country: 'Iceland', share: 29.0, valuation: 0.28, units: 2283 },
+                { country: 'Germany', share: 17.7, valuation: 13.1, units: 248726 },
+                { country: 'Belgium', share: 32.8, valuation: 2.1, units: 76980 },
+                { country: 'France', share: 17.6, valuation: 9.3, units: 148332 },
+                { country: 'United Kingdom', share: 21.6, valuation: 12.4, units: 224841 },
+                { country: 'Singapore', share: 10.0, valuation: 1.7, units: 20000 },
+                { country: 'Hong Kong', share: 15.0, valuation: 0.7, units: 15000 },
+                { country: 'Taiwan', share: 3.0, valuation: 1.2, units: 25000 },
+                { country: 'South Korea', share: 8.0, valuation: 6.9, units: 150000 },
+                { country: 'Japan', share: 12.6, valuation: 46.97, units: 165000 },
+                { country: 'China', share: 50.1, valuation: 164, units: 10900000 },
+                { country: 'Australia', share: 9.8, valuation: 4.3, units: 50000 },
+                { country: 'New Zealand', share: 20.0, valuation: 0.6, units: 15000 },
+                { country: 'Malaysia', share: 3.7, valuation: 0.43, units: 10000 },
+                { country: 'Thailand', share: 13.0, valuation: 2.42, units: 40000 },
+                { country: 'Indonesia', share: 3.6, valuation: 1.3, units: 50000 },
+                { country: 'India', share: 5.5, valuation: 9.5, units: 2000000 },
+                { country: 'Canada', share: 8.6, valuation: 12.65, units: 202000 }
+            ];
+
+            const palette = {
+                blue: '#3366CC',
+                sky: '#36A2EB',
+                teal: '#4BC0C0',
+                indigo: '#667EEA',
+                purple: '#9F7AEA',
+                gray: '#A0AEC0'
+            };
+
+            const chartColors = Object.values(palette);
+
+            const commonTooltipOptions = {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                    return label.join(' ');
+                                } else {
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            
+            const wrapLabel = (label, maxLength = 16) => {
+                if (label.length <= maxLength) {
+                    return label;
+                }
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = '';
+                for (const word of words) {
+                    if ((currentLine + word).length > maxLength) {
+                        lines.push(currentLine.trim());
+                        currentLine = '';
+                    }
+                    currentLine += word + ' ';
+                }
+                lines.push(currentLine.trim());
+                return lines;
+            };
+
+            const topN = (data, key, n) => [...data].sort((a, b) => b[key] - a[key]).slice(0, n);
+
+            const marketShareData = topN(evData, 'share', 10);
+            new Chart(document.getElementById('marketShareChart'), {
+                type: 'bar',
+                data: {
+                    labels: marketShareData.map(d => d.country),
+                    datasets: [{
+                        label: 'EV Market Share (%)',
+                        data: marketShareData.map(d => d.share),
+                        backgroundColor: chartColors,
+                        borderColor: '#ffffff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    ...commonTooltipOptions,
+                    plugins: { ...commonTooltipOptions.plugins, legend: { display: false } },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Market Share (%)' }
+                        }
+                    }
+                }
+            });
+
+            const marketValuationData = topN(evData, 'valuation', 10);
+            new Chart(document.getElementById('marketValuationChart'), {
+                type: 'bar',
+                data: {
+                    labels: marketValuationData.map(d => wrapLabel(d.country)),
+                    datasets: [{
+                        label: 'Market Valuation (in Billions USD)',
+                        data: marketValuationData.map(d => d.valuation),
+                        backgroundColor: palette.blue,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    ...commonTooltipOptions,
+                    plugins: { ...commonTooltipOptions.plugins, legend: { display: false } },
+                    scales: {
+                        y: {
+                            title: { display: true, text: 'Valuation (Billions USD)' }
+                        }
+                    }
+                }
+            });
+
+            const unitsSoldData = topN(evData, 'units', 10);
+            new Chart(document.getElementById('unitsSoldChart'), {
+                type: 'bar',
+                data: {
+                    labels: unitsSoldData.map(d => wrapLabel(d.country)),
+                    datasets: [{
+                        label: 'Units Sold',
+                        data: unitsSoldData.map(d => d.units),
+                        backgroundColor: palette.teal,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    ...commonTooltipOptions,
+                    plugins: { ...commonTooltipOptions.plugins, legend: { display: false } },
+                    scales: {
+                        y: {
+                            type: 'logarithmic',
+                            title: { display: true, text: 'Units Sold (Logarithmic Scale)' }
+                        }
+                    }
+                }
+            });
+
+            new Chart(document.getElementById('bubbleChart'), {
+                type: 'bubble',
+                data: {
+                    labels: evData.map(d => d.country),
+                    datasets: [{
+                        label: 'EV Market Overview',
+                        data: evData.map(d => ({
+                            x: d.share,
+                            y: d.valuation,
+                            r: Math.max(5, Math.log10(d.units + 1) * 5),
+                            country: d.country,
+                            units: d.units
+                        })),
+                        backgroundColor: chartColors.map(c => c + 'B3'),
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    ...commonTooltipOptions,
+                    plugins: {
+                        ...commonTooltipOptions.plugins,
+                        legend: { display: false },
+                        tooltip: {
+                             ...commonTooltipOptions.plugins.tooltip,
+                             callbacks: {
+                                title: (tooltipItems) => tooltipItems[0].raw.country,
+                                label: (context) => {
+                                    const raw = context.raw;
+                                    return [
+                                        `Market Share: ${raw.x.toFixed(1)}%`,
+                                        `Valuation: $${raw.y.toFixed(2)}B`,
+                                        `Units Sold: ${raw.units.toLocaleString()}`
+                                    ];
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Market Share (%)' },
+                            max: 100
+                        },
+                        y: {
+                            type: 'logarithmic',
+                            title: { display: true, text: 'Market Valuation (Billions USD, Log Scale)' }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
