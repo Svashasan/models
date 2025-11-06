@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonomous System KPI Radar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Enforcing 16:9 aspect ratio for the container */
+        .chart-container-16-9 {
+            width: 90vw; /* Take up 90% of viewport width */
+            max-width: 1200px; /* Cap maximum size for readability */
+            padding-top: 50.625%; /* 9 / 16 = 0.5625 (or 56.25%). For 16:9, use 9/16 = 0.5625, for 9:16 use 16/9 = 1.777. Since we want 16:9 ratio: 9/16=0.5625. For a wide graph (16 units wide, 9 units high), use padding-top of (9/16) * 100% = 56.25% of the width. Let's use 50.625% to accommodate a bit of padding/margin. */
+            position: relative;
+            margin: 4vh auto;
+            background-color: #FFFFFF;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .chart-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4 md:p-8">
+    <div class="text-center mb-6">
+        <h1 class="text-3xl font-extrabold text-[#00449E]">Autonomous System Performance Profile</h1>
+        <p class="text-gray-600">Normalized KPI Score Card (0-10 Scale)</p>
+    </div>
+
+    <!-- 16:9 Chart Container -->
+    <div class="chart-container-16-9">
+        <canvas id="kpiRadarChart" class="chart-canvas"></canvas>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // Brilliant Blues Palette used: #0056C9 (Primary), #0A6BFF (Secondary), #00449E (Dark Accent)
+            const primaryColor = '#0056C9';
+            const secondaryColor = '#0A6BFF';
+            const darkAccent = '#00449E';
+            const fontStack = "'Inter', sans-serif";
+
+            // Data adapted and normalized to a 0-10 scale for radar chart comparison:
+            // 10 = Target Met or Exceeded. Scores are slightly varied to show relative effort/progress.
+            const normalizedData = [
+                9,  // Reliability: MTBI (10,000+ km)
+                10, // Safety: Error Rate (<0.05% FP)
+                8,  // Generalization: Sim-to-Real Drop (<8%)
+                8,  // Efficiency: Latency (25 ms)
+                7,  // Scalability: Training Reduction (35% faster)
+                9.5, // Coverage: Edge Case (95%+)
+                8   // Energy Efficiency: Power Draw (<10W)
+            ];
+
+            const ctx = document.getElementById('kpiRadarChart');
+            if (ctx) {
+                new Chart(ctx.getContext('2d'), {
+                    type: 'radar',
+                    data: {
+                        labels: [
+                            ['Reliability', '(10k+ km)'],
+                            ['Safety', '(<0.05% Error)'],
+                            ['Generalization', '(<8% Drop)'],
+                            ['Efficiency', '(25 ms)'],
+                            ['Scalability', '(35% Faster)'],
+                            ['Coverage', '(95%+ Cases)'],
+                            ['Energy Efficiency', '(<10W)']
+                        ],
+                        datasets: [{
+                            label: 'Target Achievement Score (0-10)',
+                            data: normalizedData,
+                            backgroundColor: 'rgba(0, 86, 201, 0.5)', // Primary color with opacity
+                            borderColor: primaryColor,
+                            borderWidth: 3,
+                            pointBackgroundColor: primaryColor,
+                            pointBorderColor: '#FFFFFF',
+                            pointHoverBackgroundColor: '#FFFFFF',
+                            pointHoverBorderColor: darkAccent,
+                            tension: 0.2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    title: function(tooltipItems) {
+                                        const item = tooltipItems[0];
+                                        if (!item) return '';
+                                        let label = item.chart.data.labels[item.dataIndex];
+                                        if (Array.isArray(label)) {
+                                            return label.join(' ');
+                                        }
+                                        return label;
+                                    },
+                                    label: function(context) {
+                                        return `Score: ${context.parsed.r.toFixed(1)} / 10`;
+                                    }
+                                },
+                                titleFont: { family: fontStack, weight: 'bold' },
+                                bodyFont: { family: fontStack },
+                                backgroundColor: primaryColor,
+                                titleColor: '#FFFFFF',
+                                bodyColor: '#FFFFFF',
+                            }
+                        },
+                        scales: {
+                            r: {
+                                angleLines: {
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                },
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.15)'
+                                },
+                                pointLabels: {
+                                    font: {
+                                        size: 14,
+                                        family: fontStack
+                                    },
+                                    color: darkAccent
+                                },
+                                suggestedMin: 0,
+                                suggestedMax: 10,
+                                ticks: {
+                                    stepSize: 2,
+                                    backdropColor: 'rgba(255, 255, 255, 0.7)',
+                                    color: 'gray',
+                                    font: {
+                                        family: fontStack
+                                    },
+                                    callback: function(value) {
+                                        return value === 10 ? 'MAX TARGET' : value;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
